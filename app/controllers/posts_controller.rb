@@ -1,8 +1,7 @@
 class PostsController < ApplicationController
   allow_unauthenticated_access only: %i[ index show ]
   before_action :set_post, only: %i[ show edit update destroy]
-  has_rich_text :description
-  
+
   def index
     @posts = Post.all
   end
@@ -39,6 +38,9 @@ class PostsController < ApplicationController
     redirect_to posts_path
   end
 
+  def post_params
+    params.expect(post: [ :name, :description ])
+  end
 
   private
     def set_post
